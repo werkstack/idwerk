@@ -13,9 +13,23 @@
 alias IdWerk.{Accounts, Services, Authorizations}
 
 {:ok, user} =
-  Accounts.create_user(%{username: "sam", email: "sam@example.com", password: "123456"})
+  Accounts.create_user(%{
+    first_name: "Sam",
+    last_name: "Bar",
+    username: "sam",
+    email: "sam@example.com",
+    password: "123456"
+  })
 
 {:ok, service} = Services.create_service(%{name: "docker-images.local"})
 
 {:ok, scope} =
   Services.create_scope(%{name: "repository", actions: ["push", "pull"], service: service})
+
+{:ok, _} =
+  Services.create_resource(%{
+    user: user,
+    scope: scope,
+    identifier: "sam/elixir",
+    actions: ["pull"]
+  })
