@@ -134,6 +134,15 @@ defmodule IdWerk.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Validate provided password against username
+  """
+  def validate_password(username, password) do
+    User
+    |> Repo.get_by(%{username: username})
+    |> User.validate_password(password)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

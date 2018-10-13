@@ -47,4 +47,19 @@ defmodule IdWerk.Accounts.User do
     |> unique_constraint(:email)
     |> assoc_constraint(:group)
   end
+
+  @doc """
+  Validates password for given user
+  """
+  def validate_password(%__MODULE__{} = user, password) do
+    case Comeonin.Argon2.checkpw(password, user.password_hash) do
+      true -> {:ok, user}
+      false -> {:error, :wrong_password}
+    end
+  end
+
+  def validate_password(_, _password) do
+    Comeonin.Argon2.dummy_checkpw()
+    {:error, :non_existing_user}
+  end
 end
