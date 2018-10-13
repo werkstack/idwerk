@@ -41,7 +41,8 @@ defmodule IdWerk.MixProject do
       {:phoenix_live_reload, "~> 1.2-rc", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:ex_guard, "~> 1.3", only: :dev}
     ]
   end
 
