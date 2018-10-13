@@ -35,12 +35,3 @@ docker login -u <username> -p <password> registry.local:5000
 ```
 docker push registry.local:5000/<image-name>
 ```
-
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
