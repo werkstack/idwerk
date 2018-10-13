@@ -19,6 +19,9 @@ defmodule IdWerkWeb.TokenApiControllerTest do
     test "with valid Authorization header", %{conn: conn} do
       password = Base.encode64(:crypto.strong_rand_bytes(10))
       user = user_fixture(%{password: password})
+      scope = scope_fixture()
+
+      params = %{service: scope.service.name}
 
       conn =
         conn
@@ -26,9 +29,9 @@ defmodule IdWerkWeb.TokenApiControllerTest do
           "authorization",
           "Basic " <> Base.encode64("#{user.username}:#{password}")
         )
-        |> get(Routes.oauth_api_path(conn, :auth_jwt, %{}))
+        |> get(Routes.oauth_api_path(conn, :auth_jwt, params))
 
-      assert json_response(conn, 200)
+      assert %{"access_token" => _} = json_response(conn, 200)
       assert conn.assigns[:authenticated_user]
     end
   end

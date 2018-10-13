@@ -33,6 +33,26 @@ defmodule IdWerk.OpenSSL do
     |> elem(1)
   end
 
+  def public_key_fingerprint(pem_entry) do
+    key_der =
+      pem_entry
+      |> public_key
+      |> public_key_to_pem
+
+    sha = :crypto.hash(:sha256, key_der)
+
+    payload =
+      :sha256
+      |> :crypto.hash(key_der)
+      |> :binary.bin_to_list()
+      |> Enum.take(30)
+      |> :binary.list_to_bin()
+      |> Base.encode32()
+
+    list = for <<x::binary-4 <- payload>>, do: x
+    Enum.join(list, ":")
+  end
+
   defp public_key_by_alg(:RSAPrivateKey, pem_entry) do
     modulus = elem(pem_entry, 2)
     publicExponent = elem(pem_entry, 3)

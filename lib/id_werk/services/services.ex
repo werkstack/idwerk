@@ -37,6 +37,8 @@ defmodule IdWerk.Services do
   """
   def get_service!(id), do: Repo.get!(Service, id)
 
+  def get_service_by(opts), do: Repo.get_by(Service, opts)
+
   @doc """
   Creates a service.
 

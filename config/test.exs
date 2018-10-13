@@ -18,3 +18,8 @@ config :id_werk, IdWerk.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :argon2_elixir, t_cost: 1, m_cost: 8
+
+config :id_werk, IdWerk.JWT.SignatureAlgorithm,
+  source: :string,
+  private_key:
+    "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGrAIJcVpJSsdCS5YO0NfA8mmJeBWt2fdzbMPxvNNml2oAoGCCqGSM49\nAwEHoUQDQgAELfKeoQQGPM4/4wxh0WOgP7tXoJrPTrSQSIMKI6pAYU68ZP3ONI1I\nVW83OtgmEVPLt+kxIHooeHVxz90jKeuaVw==\n-----END EC PRIVATE KEY-----"
