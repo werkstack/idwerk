@@ -57,4 +57,34 @@ defmodule IdWerk.OpenSSLTest do
                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsBgVl2tGegLEG+8oiOBQ"
     end
   end
+
+  describe "ec - secp256r1" do
+    @ec_pem """
+    -----BEGIN EC PRIVATE KEY-----
+    MHcCAQEEIGrAIJcVpJSsdCS5YO0NfA8mmJeBWt2fdzbMPxvNNml2oAoGCCqGSM49
+    AwEHoUQDQgAELfKeoQQGPM4/4wxh0WOgP7tXoJrPTrSQSIMKI6pAYU68ZP3ONI1I
+    VW83OtgmEVPLt+kxIHooeHVxz90jKeuaVw==
+    -----END EC PRIVATE KEY-----
+    """
+  end
+
+  test "parses private key" do
+    assert {:ok, pem_entry} = OpenSSL.from_pem(@ec_pem)
+    assert elem(pem_entry, 0) == :ECPrivateKey
+  end
+
+  test "extracts public key" do
+    assert {:ok, pem_entry} = OpenSSL.from_pem(@ec_pem)
+
+    assert {{:ECPoint, _}, {:namedCurve, _}} = OpenSSL.public_key(pem_entry)
+  end
+
+  test "extract public key to der encoding" do
+    assert {:ok, pem_entry} = OpenSSL.from_pem(@ec_pem)
+
+    assert public_key = OpenSSL.public_key(pem_entry)
+    assert public_key_pem = OpenSSL.public_key_to_pem(public_key)
+
+    assert Base.encode64(public_key_pem) =~ "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQg"
+  end
 end

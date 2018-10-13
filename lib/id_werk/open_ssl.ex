@@ -38,4 +38,11 @@ defmodule IdWerk.OpenSSL do
     publicExponent = elem(pem_entry, 3)
     {:RSAPublicKey, modulus, publicExponent}
   end
+
+  defp public_key_by_alg(:ECPrivateKey, pem_entry) do
+    named_curve = elem(pem_entry, 3)
+    public_key = elem(pem_entry, 4)
+
+    {{:ECPoint, public_key}, named_curve}
+  end
 end
