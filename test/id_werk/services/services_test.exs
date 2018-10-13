@@ -10,15 +10,6 @@ defmodule IdWerk.ServicesTest do
     @update_attrs %{name: "some.Updated-name-extra.local"}
     @invalid_attrs %{name: "some random name"}
 
-    def service_fixture(attrs \\ %{}) do
-      {:ok, service} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Services.create_service()
-
-      service
-    end
-
     test "list_services/0 returns all services" do
       service = service_fixture()
       assert Services.list_services() == [service]
@@ -69,18 +60,6 @@ defmodule IdWerk.ServicesTest do
     @valid_attrs %{actions: ["pull", "push"], name: "repository"}
     @update_attrs %{actions: ["pull-and-push"], name: "repository-access"}
     @invalid_attrs %{actions: nil, name: nil}
-
-    def scope_fixture(attrs \\ %{}) do
-      {:ok, service} = Services.create_service(%{name: "docker.foo.bar"})
-
-      {:ok, scope} =
-        attrs
-        |> Map.put(:service, service)
-        |> Enum.into(@valid_attrs)
-        |> Services.create_scope()
-
-      scope
-    end
 
     test "list_scopes/0 returns all scopes" do
       scope = scope_fixture()
@@ -147,36 +126,6 @@ defmodule IdWerk.ServicesTest do
     @valid_attrs %{actions: [], identifier: "some identifier"}
     @update_attrs %{actions: [], identifier: "some updated identifier"}
     @invalid_attrs %{actions: nil, identifier: nil}
-
-    def user_fixture(attrs \\ %{}) do
-      default_attrs = %{
-        first_name: "first",
-        last_name: "last",
-        name: "som",
-        username: "as",
-        email: "asas",
-        password: "asasdsad"
-      }
-
-      attrs = Enum.into(attrs, default_attrs)
-      {:ok, user} = IdWerk.Accounts.create_user(attrs)
-
-      user
-    end
-
-    def resource_fixture(attrs \\ %{}) do
-      scope = scope_fixture()
-      user = user_fixture()
-
-      {:ok, resource} =
-        attrs
-        |> Map.put(:scope, scope)
-        |> Map.put(:user, user)
-        |> Enum.into(@valid_attrs)
-        |> Services.create_resource()
-
-      resource
-    end
 
     test "list_resources/0 returns all resources" do
       resource = resource_fixture()

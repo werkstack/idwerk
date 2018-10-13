@@ -90,15 +90,6 @@ defmodule IdWerk.AccountsTest do
       username: nil
     }
 
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user()
-
-      user
-    end
-
     test "list_users/0 returns all users" do
       user = user_fixture()
       user_id = user.id
