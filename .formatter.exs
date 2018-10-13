@@ -2,7 +2,8 @@ locals_without_parens = [
   defenum: 3,
   drop: 1,
   add: 2,
-  add: 3
+  add: 3,
+  create: 1
 ]
 
 [

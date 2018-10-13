@@ -16,3 +16,5 @@ config :id_werk, IdWerk.Repo,
   database: "id_werk_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :argon2_elixir, t_cost: 1, m_cost: 8

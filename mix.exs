@@ -42,6 +42,8 @@ defmodule IdWerk.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:cowboy, "~> 1.0"},
+      {:comeonin, "~> 4.1"},
+      {:argon2_elixir, "~> 1.3"},
       {:ecto_enum, "~> 1.1"},
       {:ex_guard, "~> 1.3", only: :dev}
     ]
