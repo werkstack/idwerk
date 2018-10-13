@@ -21,7 +21,7 @@ alias IdWerk.{Accounts, Services, Authorizations}
     password: "123456"
   })
 
-{:ok, service} = Services.create_service(%{name: "docker-images.local"})
+{:ok, service} = Services.create_service(%{name: "registry.local"})
 
 {:ok, scope} =
   Services.create_scope(%{name: "repository", actions: ["push", "pull"], service: service})
@@ -31,5 +31,5 @@ alias IdWerk.{Accounts, Services, Authorizations}
     user: user,
     scope: scope,
     identifier: "sam/elixir",
-    actions: ["pull"]
+    actions: ["pull", "push"]
   })

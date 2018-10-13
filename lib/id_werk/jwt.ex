@@ -8,7 +8,7 @@ defmodule IdWerk.JWT do
     now = DateTime.utc_now()
 
     jwt_params = %{
-      iss: "auth.docker.local",
+      iss: "idwerk.local",
       sub: user.id,
       aud: service.name,
       exp: DateTime.to_unix(Timex.shift(now, expire_in)),

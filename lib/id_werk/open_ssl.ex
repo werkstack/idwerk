@@ -39,8 +39,6 @@ defmodule IdWerk.OpenSSL do
       |> public_key
       |> public_key_to_pem
 
-    sha = :crypto.hash(:sha256, key_der)
-
     payload =
       :sha256
       |> :crypto.hash(key_der)

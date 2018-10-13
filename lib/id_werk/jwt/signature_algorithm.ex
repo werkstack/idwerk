@@ -33,4 +33,8 @@ defmodule IdWerk.JWT.SignatureAlgorithm do
   defp load_private_key_pem(private_key_str, :string) do
     JOSE.JWK.from_pem(private_key_str)
   end
+
+  defp load_private_key_pem(private_key_file, :file) do
+    JOSE.JWK.from_pem_file(private_key_file)
+  end
 end
