@@ -13,9 +13,9 @@ openssl req \
 
 ```
 
-2. Adjust the key in `config/dev.exs`
+2. Adjust the key in `config/dev.exs` (if you changed the `idwerk-jwt-key.pem` path)
 
-3. Point `registry.local` to your `localhost`
+3. Point `registry.local` to your `localhost` (in `/etc/hosts`)
 
 4. Run the code
 ```
