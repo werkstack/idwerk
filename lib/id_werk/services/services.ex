@@ -101,4 +101,100 @@ defmodule IdWerk.Services do
   def change_service(%Service{} = service) do
     Service.changeset(service, %{})
   end
+
+  alias IdWerk.Services.Scope
+
+  @doc """
+  Returns the list of scopes.
+
+  ## Examples
+
+      iex> list_scopes()
+      [%Scope{}, ...]
+
+  """
+  def list_scopes do
+    Repo.all(Scope)
+  end
+
+  @doc """
+  Gets a single scope.
+
+  Raises `Ecto.NoResultsError` if the Scope does not exist.
+
+  ## Examples
+
+      iex> get_scope!(123)
+      %Scope{}
+
+      iex> get_scope!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_scope!(id), do: Repo.get!(Scope, id)
+
+  @doc """
+  Creates a scope.
+
+  ## Examples
+
+      iex> create_scope(%{field: value})
+      {:ok, %Scope{}}
+
+      iex> create_scope(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_scope(attrs \\ %{}) do
+    %Scope{}
+    |> Scope.create_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a scope.
+
+  ## Examples
+
+      iex> update_scope(scope, %{field: new_value})
+      {:ok, %Scope{}}
+
+      iex> update_scope(scope, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_scope(%Scope{} = scope, attrs) do
+    scope
+    |> Scope.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Scope.
+
+  ## Examples
+
+      iex> delete_scope(scope)
+      {:ok, %Scope{}}
+
+      iex> delete_scope(scope)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_scope(%Scope{} = scope) do
+    Repo.delete(scope)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking scope changes.
+
+  ## Examples
+
+      iex> change_scope(scope)
+      %Ecto.Changeset{source: %Scope{}}
+
+  """
+  def change_scope(%Scope{} = scope) do
+    Scope.changeset(scope, %{})
+  end
 end
