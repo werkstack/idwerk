@@ -27,7 +27,7 @@ alias IdWerk.{Accounts, Services, Authorizations}
   Services.create_scope(%{name: "repository", actions: ["push", "pull"], service: service})
 
 {:ok, _} =
-  Services.create_resource(%{
+  Authorizations.create_resource(%{
     user: user,
     scope: scope,
     identifier: "sam/elixir",

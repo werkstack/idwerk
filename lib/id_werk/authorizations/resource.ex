@@ -1,4 +1,4 @@
-defmodule IdWerk.Services.Resource do
+defmodule IdWerk.Authorizations.Resource do
   use Ecto.Schema
   import Ecto.Changeset
 

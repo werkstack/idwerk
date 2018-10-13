@@ -11,7 +11,7 @@ defmodule IdWerk.Fixture do
     password: "asasdsad"
   }
 
-  alias IdWerk.{Accounts, Services}
+  alias IdWerk.{Accounts, Services, Authorizations}
 
   def service_fixture(attrs \\ %{}) do
     {:ok, service} =
@@ -52,7 +52,7 @@ defmodule IdWerk.Fixture do
       |> Map.put(:scope, scope)
       |> Map.put(:user, user)
       |> Enum.into(@valid_resource_attr)
-      |> Services.create_resource()
+      |> Authorizations.create_resource()
 
     resource
   end
