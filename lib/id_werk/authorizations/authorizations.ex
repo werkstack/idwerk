@@ -130,7 +130,25 @@ defmodule IdWerk.Authorizations do
 
     q
     |> Repo.all()
+    |> check_wildcard(request_scope)
     |> Enum.map(&%{name: &1.identifier, actions: &1.actions, type: &1.scope.name})
     |> Enum.filter(&(&1.name == request_scope.identifier))
+  end
+
+  defp check_wildcard(user_scopes, request_scope) do
+    user_scopes
+    |> Enum.filter(&(&1.identifier == "*"))
+    |> List.first()
+    |> case do
+      nil ->
+        user_scopes
+
+      wildcard ->
+        [
+          request_scope
+          |> Map.put(:scope, wildcard.scope)
+          |> Map.put(:actions, wildcard.actions)
+        ]
+    end
   end
 end

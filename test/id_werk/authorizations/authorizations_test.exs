@@ -44,6 +44,32 @@ defmodule IdWerk.AuthorizationsTest do
                %{type: "repository", name: "foo/bar", actions: ["pull"]}
              ]
     end
+
+    test "user should have access to foo/bar with pull & push action" do
+      %{scope: %{service: service} = _scope} =
+        _resource = resource_fixture(%{identifier: "foo/bar", actions: ["push", "pull"]})
+
+      [user] = Repo.preload(Repo.all(IdWerk.Accounts.User), :group)
+
+      request_scope = %{name: "repository", identifier: "foo/bar", actions: ["pull"]}
+
+      assert Authorizations.access_list(user, service, request_scope) == [
+               %{type: "repository", name: "foo/bar", actions: ["push", "pull"]}
+             ]
+    end
+
+    test "with wildcard identifier, user should access to all resources" do
+      %{scope: %{service: service} = _scope} =
+        _resource = resource_fixture(%{identifier: "*", actions: ["push", "pull"]})
+
+      [user] = Repo.preload(Repo.all(IdWerk.Accounts.User), :group)
+
+      request_scope = %{name: "repository", identifier: "foo/bar", actions: ["pull"]}
+
+      assert Authorizations.access_list(user, service, request_scope) == [
+               %{type: "repository", name: "foo/bar", actions: ["push", "pull"]}
+             ]
+    end
   end
 
   describe "resources" do
