@@ -18,6 +18,7 @@ defmodule IdWerkWeb.Plug.BasicAuthorizationHeaderPlug do
     with {:ok, user_pass} <- Base.decode64(attempted_auth),
          [username, password] <- String.split(user_pass, ":"),
          {:ok, user} <- Accounts.validate_password(username, password) do
+      user = Accounts.with_groups(user)
       assign(conn, :authenticated_user, user)
     else
       _ ->

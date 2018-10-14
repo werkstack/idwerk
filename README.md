@@ -30,7 +30,7 @@ docker-compose exec idwerk.local mix run priv/repo/seeds.exs
 docker login -u <username> -p <password> registry.local:5000
 ```
 
-6. Build and image and push it to docker(It's not implemented yet!)
+6. Build and image and push it to docker
 
 ```
 docker push registry.local:5000/<image-name>

@@ -208,4 +208,8 @@ defmodule IdWerk.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def with_groups(%User{} = user) do
+    Repo.preload(user, [:group])
+  end
 end

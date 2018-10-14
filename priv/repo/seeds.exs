@@ -30,6 +30,6 @@ alias IdWerk.{Accounts, Services, Authorizations}
   Authorizations.create_resource(%{
     user: user,
     scope: scope,
-    identifier: "sam/elixir",
+    identifier: "*",
     actions: ["pull", "push"]
   })

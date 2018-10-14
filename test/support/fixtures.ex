@@ -2,14 +2,6 @@ defmodule IdWerk.Fixture do
   @valid_service_attrs %{name: "some-name"}
   @valid_scope_attrs %{actions: ["pull", "push"], name: "repository"}
   @valid_resource_attr %{actions: [], identifier: "some identifier"}
-  @valid_user_attrs %{
-    first_name: "first",
-    last_name: "last",
-    name: "som",
-    username: "as",
-    email: "asas",
-    password: "asasdsad"
-  }
 
   alias IdWerk.{Accounts, Services, Authorizations}
 
@@ -35,9 +27,20 @@ defmodule IdWerk.Fixture do
   end
 
   def user_fixture(attrs \\ %{}) do
+    random = Base.encode16(:crypto.strong_rand_bytes(5), case: :lower)
+
+    valid_user_attrs = %{
+      first_name: "first",
+      last_name: "last",
+      name: "user-#{random}",
+      username: "user#{random}",
+      email: "email#{random}@email.com",
+      password: "asasdsad"
+    }
+
     {:ok, user} =
       attrs
-      |> Enum.into(@valid_user_attrs)
+      |> Enum.into(valid_user_attrs)
       |> Accounts.create_user()
 
     user
@@ -45,7 +48,7 @@ defmodule IdWerk.Fixture do
 
   def resource_fixture(attrs \\ %{}) do
     scope = scope_fixture()
-    user = user_fixture()
+    user = attrs[:user] || user_fixture()
 
     {:ok, resource} =
       attrs
