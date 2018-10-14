@@ -20,7 +20,8 @@ openssl req \
 4. Run the code
 ```
 mix deps.get #remove _build deps directories, if you have compiled the project in your main OS
-docker-compose up #(keep it running or use -d)
+docker-compose up #keep it running or use -d
+docker-compose logs -f #wait until the project and dependencies are compiled
 docker-compose exec idwerk.local mix do ecto.create, ecto.migrate
 docker-compose exec idwerk.local mix run priv/repo/seeds.exs
 ```
