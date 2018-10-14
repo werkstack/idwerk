@@ -26,7 +26,7 @@ docker-compose exec idwerk.local mix do ecto.create, ecto.migrate
 docker-compose exec idwerk.local mix run priv/repo/seeds.exs
 ```
 
-5. Login to docker (checkout the user & password from `seeds.exs`
+5. Login to docker (checkout the user & password from `seeds.exs`)
 ```
 docker login -u <username> -p <password> registry.local:5000
 ```
