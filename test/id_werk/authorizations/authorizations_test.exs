@@ -3,6 +3,49 @@ defmodule IdWerk.AuthorizationsTest do
 
   alias IdWerk.Authorizations
 
+  describe "user's access level" do
+    test "Parse docker request scope with full params" do
+      scope_fixture(%{name: "repository", actions: ["pull", "push"]})
+      {:ok, request_scope} = Authorizations.parse_docker_scope("repository:foo/bar:pull,push")
+      assert request_scope.name == "repository"
+      assert request_scope.identifier == "foo/bar"
+      assert request_scope.actions == ["pull", "push"]
+    end
+
+    test "Parse docker request scope with one action and wildcard identifier" do
+      scope_fixture(%{name: "repository", actions: ["pull", "push"]})
+      {:ok, request_scope} = Authorizations.parse_docker_scope("repository:*:pull")
+      assert request_scope.name == "repository"
+      assert request_scope.identifier == "*"
+      assert request_scope.actions == ["pull"]
+    end
+
+    test "Parse docker request scope with invalid identifier" do
+      scope_fixture(%{name: "repository", actions: ["pull", "push"]})
+      assert :error = Authorizations.parse_docker_scope("repository:foo:bar:pull")
+    end
+
+    test "user should access to nothing by default" do
+      user = user_fixture()
+      %{service: service} = scope_fixture()
+      request_scope = %{name: "repository", identifier: "foo/bar", actions: ["pull"]}
+      assert Authorizations.access_list(user, service, request_scope) == []
+    end
+
+    test "user should have access to foo/bar with pull action" do
+      %{scope: %{service: service} = _scope} =
+        _resource = resource_fixture(%{identifier: "foo/bar", actions: ["pull"]})
+
+      [user] = Repo.preload(Repo.all(IdWerk.Accounts.User), :group)
+
+      request_scope = %{name: "repository", identifier: "foo/bar", actions: ["pull"]}
+
+      assert Authorizations.access_list(user, service, request_scope) == [
+               %{type: "repository", name: "foo/bar", actions: ["pull"]}
+             ]
+    end
+  end
+
   describe "resources" do
     alias IdWerk.Authorizations.Resource
 
