@@ -22,6 +22,7 @@ defmodule IdWerk.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import IdWerk.DataCase
+      import IdWerk.Fixture
     end
   end
 

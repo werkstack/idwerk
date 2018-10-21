@@ -71,5 +71,9 @@ config :id_werk, IdWerk.Repo,
   username: "postgres",
   password: "postgres",
   database: "id_werk_dev",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOSTNAME") || "localhost",
   pool_size: 10
+
+config :id_werk, IdWerk.JWT.SignatureAlgorithm,
+  source: :file,
+  private_key: "priv/tmp/certs/idwerk-jwt-key.pem"

@@ -19,8 +19,8 @@ defmodule IdWerkWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", IdWerkWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", IdWerkWeb do
+    pipe_through :api
+    get "/oauth2/v1/auth", OAuthApiController, :auth_jwt, as: :oauth_api
+  end
 end

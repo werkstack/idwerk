@@ -21,6 +21,7 @@ defmodule IdWerkWeb.ConnCase do
       use Phoenix.ConnTest
       alias IdWerkWeb.Router.Helpers, as: Routes
 
+      import IdWerk.Fixture
       # The default endpoint for testing
       @endpoint IdWerkWeb.Endpoint
     end
