@@ -1,6 +1,6 @@
 # IdWerk
 
-## Devlopment
+## Development
 
 1. Create the key and certificate
 ```
